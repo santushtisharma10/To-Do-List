@@ -1,19 +1,19 @@
+require("dotenv").config()
+
 const express = require("express")
 const cors = require('cors')
 const mongoose = require('mongoose')
 const User = require("./models/user")
 
-require("dotenv").config()
-
-const username = process.env.USERNAME
-const password = process.env.PASSWORD
+var username = process.env.USER_NAME
+var password = process.env.USER_PWD
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
 
-const url = "mongodb+srv://"+username+":"+password+"@cluster0.mreev.mongodb.net/list?retryWrites=true&w=majority"
+const url = "mongodb+srv://"+process.env.USER_NAME+":"+process.env.USER_PWD+"@cluster0.mreev.mongodb.net/list?retryWrites=true&w=majority"
 mongoose.connect(url)
     .then((res) =>
         app.listen(5000, () => {
