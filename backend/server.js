@@ -5,9 +5,6 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const User = require("./models/user")
 
-var username = process.env.USER_NAME
-var password = process.env.USER_PWD
-
 const app = express()
 
 app.use(cors())
@@ -27,14 +24,32 @@ app.get('/login', (req, res) => {
     res.send("Hello login")
 })
 
-app.post('/login', (req, res) => {
+app.post('/login', async(req, res) => {
 
     const { user, pwd } = req.body
 
     console.log(user, pwd)
+
+    const checkUser = await User.findOne({username: user})
+
+    console.log(checkUser)
+
+    if(checkUser) {
+        console.log("sorry user exist")
+        res.status(500)
+        res.json({
+            message: "User already exist"
+        })
+        return ;
+    }
+    const login = new User({
+
+        username:user, 
+        password:pwd
+    })
+    login.save()
     res.json({
 
-        user,
-        pwd
+        message:"success"
     })
 })
