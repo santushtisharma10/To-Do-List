@@ -6,12 +6,12 @@ function Login() {
     const [pwd, setPwd] = useState("")
     const [error, setError] = useState("")
 
-    const history = useHistory()
+    //const history = useHistory()
 
     const handleError = async(response) => {
 
         setError("")
-
+        console.log(response.status)
         if(!response.ok) {
 
             const {message} = await response.json();
@@ -41,16 +41,19 @@ function Login() {
         }
         )
         .then(handleError)
+        .then(()=>window.location.href = "/")
         .catch((err)=>{
 
             console.log("ERROR", err)
             setError(err.message)
         })
     }
+
+    const history = useHistory
     return (
         <div>
             <h3>Login Form</h3>
-            {error.length  > 0 && <h2>{error}</h2>}
+            {error && <h2>{error}</h2>}
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
