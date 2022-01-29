@@ -1,4 +1,4 @@
-import React, { useState, useHistory } from "react";
+import React, { useState } from "react";
 
 function Login() {
 
@@ -49,7 +49,6 @@ function Login() {
         })
     }
 
-    const history = useHistory
     return (
         <div>
             <h3>Login Form</h3>
